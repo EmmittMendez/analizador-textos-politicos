@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import ttk, filedialog
+import tkinter.messagebox as messagebox
 
 class Window1(tk.Toplevel):
     def __init__(self, parent):
@@ -23,6 +25,33 @@ class Window1(tk.Toplevel):
         # Posicionar la ventana
         self.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         self.resizable(False, False)
+
+        # Crear widgets
+        self.create_widgets()
+
+    def create_widgets(self):
+        # Crear un botón para seleccionar un archivo PDF
+        self.select_file_button = ttk.Button(self, text="Seleccionar archivo PDF", command=self.select_file)
+        self.select_file_button.pack(pady=20)
+
+        # Crear una etiqueta y un campo de texto para el presidente
+        self.president_label = ttk.Label(self, text="Presidente:")
+        self.president_label.pack(pady=10)
+        self.president_entry = ttk.Entry(self)
+        self.president_entry.pack(pady=10)
+
+        # Crear una etiqueta y un campo de texto para el año de sexenio
+        self.year_label = ttk.Label(self, text="Año de sexenio:")
+        self.year_label.pack(pady=10)
+        self.year_entry = ttk.Entry(self)
+        self.year_entry.pack(pady=10)
+
+    def select_file(self):
+        # Abrir el explorador de archivos y seleccionar un archivo PDF
+        self.file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+        if self.file_path:
+            # Mostrar un cuadro de mensaje
+            messagebox.showinfo("Archivo seleccionado", "El archivo se ha subido correctamente.")
 
     def on_close(self):
         self.destroy()

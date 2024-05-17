@@ -24,6 +24,16 @@ class Window3(tk.Toplevel):
         self.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         self.resizable(False, False)
         
+        # Crear widgets
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.label = tk.Label(self, text="Esta es la ventana 1")
+        self.label.pack(pady=20)
+
+        self.button = tk.Button(self, text="Cerrar", command=self.on_close)
+        self.button.pack(pady=20)
+        
     def on_close(self):
         self.destroy()
         self.parent.deiconify()
