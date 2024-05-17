@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 import tkinter.messagebox as messagebox
+import PyPDF2
 
 class Window1(tk.Toplevel):
     def __init__(self, parent):
@@ -52,6 +53,20 @@ class Window1(tk.Toplevel):
         if self.file_path:
             # Mostrar un cuadro de mensaje
             messagebox.showinfo("Archivo seleccionado", "El archivo se ha subido correctamente.")
+            
+
+    def select_pdf_file(self):
+        file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+        if file_path:
+            self.pdf_file = file_path
+            self.read_pdf_file()
+
+    def read_pdf_file(self):
+        with open(self.pdf_file, 'rb') as file:
+            reader = PyPDF2.PdfFileReader(file)
+            self.pdf_data = {}
+            self.pdf_data['presidente'] = reader.getDocumentInfo().title
+            self.pdf_data['año_de_sexenio'] = reader.getDocumentInfo().subject
 
     def on_close(self):
         self.destroy()
